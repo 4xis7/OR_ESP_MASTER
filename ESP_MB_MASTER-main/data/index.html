@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1">
+
+<title>MASTER CONFIG</title>
+
+<style>
+
+body {
+  font-family: Arial;
+  background: #f4f4f4;
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 60px;
+}
+
+.card {
+  width: 420px;
+  margin: auto;
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin-bottom: 4px;
+}
+
+.mac-self {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 20px;
+}
+
+.node-card {
+  width: 420px;
+  margin: 16px auto;
+  background: white;
+  padding: 20px 25px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+  text-align: left;
+}
+
+.node-card h3 {
+  margin: 0 0 6px 0;
+  font-size: 16px;
+}
+
+.status {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+.status.on  {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status.off {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.saved-mac {
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 12px;
+  word-break: break-all;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 9px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+}
+
+.btn-row {
+  display: flex;
+  gap: 8px;
+}
+
+button[type="submit"] {
+  flex: 1;
+  padding: 9px;
+  font-size: 14px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button[type="submit"]:active {
+  opacity: 0.8;
+}
+
+.btn-restart {
+  width: 420px;
+  margin: 8px auto 0;
+  display: block;
+  padding: 10px;
+  font-size: 14px;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- Header -->
+<div class="card">
+
+  <h2>MASTER CONFIG</h2>
+
+  <div class="mac-self">THIS MAC : %MY_MAC%</div>
+
+</div>
+
+<!-- N1 -->
+<div class="node-card">
+
+  <h3>N1 — GPS NODE</h3>
+
+  <span class="status %M1_CLASS%">%M1_STATUS%</span>
+
+  <div class="saved-mac">Saved : %M1_MAC%</div>
+
+  <form action="/save1" method="POST">
+    <input
+      type="text"
+      name="m1"
+      placeholder="AA:BB:CC:DD:EE:FF">
+    <div class="btn-row">
+      <button type="submit">SAVE N1</button>
+    </div>
+  </form>
+
+</div>
+
+<!-- N2 -->
+<div class="node-card">
+
+  <h3>N2 — CLIENT B</h3>
+
+  <span class="status %M2_CLASS%">%M2_STATUS%</span>
+
+  <div class="saved-mac">Saved : %M2_MAC%</div>
+
+  <form action="/save2" method="POST">
+    <input
+      type="text"
+      name="m2"
+      placeholder="AA:BB:CC:DD:EE:FF">
+    <div class="btn-row">
+      <button type="submit">SAVE N2</button>
+    </div>
+  </form>
+
+</div>
+
+<!-- N3 -->
+<div class="node-card">
+
+  <h3>N3 — CLIENT C</h3>
+
+  <span class="status %M3_CLASS%">%M3_STATUS%</span>
+
+  <div class="saved-mac">Saved : %M3_MAC%</div>
+
+  <form action="/save3" method="POST">
+    <input
+      type="text"
+      name="m3"
+      placeholder="AA:BB:CC:DD:EE:FF">
+    <div class="btn-row">
+      <button type="submit">SAVE N3</button>
+    </div>
+  </form>
+
+</div>
+
+<!-- Restart -->
+<form action="/restart" method="POST">
+  <button class="btn-restart" type="submit">
+    RESTART
+  </button>
+</form>
+
+</body>
+</html>
