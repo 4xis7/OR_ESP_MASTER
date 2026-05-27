@@ -29,14 +29,10 @@ body {
   margin-bottom: 20px;
 }
 
-h2 {
-  margin-bottom: 4px;
-}
-
 .mac-self {
   font-size: 13px;
   color: #888;
-  margin-bottom: 20px;
+  margin-top: 8px;
 }
 
 .node-card {
@@ -63,15 +59,8 @@ h2 {
   margin-bottom: 10px;
 }
 
-.status.on  {
-  background: #d4edda;
-  color: #155724;
-}
-
-.status.off {
-  background: #f8d7da;
-  color: #721c24;
-}
+.on  { background: #d4edda; color: #155724; }
+.off { background: #f8d7da; color: #721c24; }
 
 .saved-mac {
   font-size: 12px;
@@ -90,13 +79,8 @@ input[type="text"] {
   margin-bottom: 8px;
 }
 
-.btn-row {
-  display: flex;
-  gap: 8px;
-}
-
 button[type="submit"] {
-  flex: 1;
+  width: 100%;
   padding: 9px;
   font-size: 14px;
   background: #007bff;
@@ -131,11 +115,8 @@ button[type="submit"]:active {
 
 <!-- Header -->
 <div class="card">
-
   <h2>MASTER CONFIG</h2>
-
   <div class="mac-self">THIS MAC : %MY_MAC%</div>
-
 </div>
 
 <!-- N1 -->
@@ -152,9 +133,7 @@ button[type="submit"]:active {
       type="text"
       name="m1"
       placeholder="AA:BB:CC:DD:EE:FF">
-    <div class="btn-row">
-      <button type="submit">SAVE N1</button>
-    </div>
+    <button type="submit">SAVE N1</button>
   </form>
 
 </div>
@@ -173,9 +152,7 @@ button[type="submit"]:active {
       type="text"
       name="m2"
       placeholder="AA:BB:CC:DD:EE:FF">
-    <div class="btn-row">
-      <button type="submit">SAVE N2</button>
-    </div>
+    <button type="submit">SAVE N2</button>
   </form>
 
 </div>
@@ -194,9 +171,7 @@ button[type="submit"]:active {
       type="text"
       name="m3"
       placeholder="AA:BB:CC:DD:EE:FF">
-    <div class="btn-row">
-      <button type="submit">SAVE N3</button>
-    </div>
+    <button type="submit">SAVE N3</button>
   </form>
 
 </div>

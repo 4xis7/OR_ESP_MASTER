@@ -3,7 +3,7 @@
 #include <WebServer.h>
 #include <Preferences.h>
 #include <esp_now.h>
-#include <LittleFS.h>
+#include <SPIFFS.h>
 
 // =======================================================
 // MASTER NODE
@@ -96,13 +96,13 @@ bool isValidMac(String mac)
 
 void handleRoot()
 {
-    if (!LittleFS.exists("/index.html"))
+    if (!SPIFFS.exists("/index.html"))
     {
         server.send(404, "text/plain", "index.html not found");
         return;
     }
 
-    File f = LittleFS.open("/index.html", "r");
+    File f = SPIFFS.open("/index.html", "r");
     String html = "";
     while (f.available())
         html += (char)f.read();
@@ -289,8 +289,8 @@ void setup()
     pinMode(2, OUTPUT);
     pinMode(4, OUTPUT);
 
-    if (!LittleFS.begin(true))
-        Serial.println("LittleFS ERROR");
+    if (!SPIFFS.begin(true))
+        Serial.println("SPIFFS ERROR");
 
     WiFi.mode(WIFI_STA);
     Serial.println(WiFi.macAddress());
