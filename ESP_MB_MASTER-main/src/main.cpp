@@ -18,7 +18,7 @@
 #define RXD1 18
 #define TXD1 19
 
-const char* AP_SSID     = "MASTER_CONFIG";
+const char* AP_SSID     = "MASTER_CONFIG_MASTER";
 const char* AP_PASSWORD = "12345678";
 
 // =======================================================
