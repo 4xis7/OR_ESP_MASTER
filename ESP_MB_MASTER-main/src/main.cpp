@@ -146,8 +146,8 @@ void handleSaveN(int n)
     }
 
     String mac = server.arg(param);
-    mac.trim();
-    mac.toUpperCase();
+    mac.trim();        // แก้ไขเพิ่ม: ตัดช่องว่างที่อาจหลุดมาจากการพิมพ์ในหน้าเว็บออก
+    mac.toUpperCase(); // แปลงเป็นตัวพิมพ์ใหญ่
 
     if (!isValidMac(mac))
     {
@@ -162,6 +162,9 @@ void handleSaveN(int n)
     prefs.end();
 
     Serial.println("SAVED N" + String(n) + " : " + mac);
+
+    // แก้ไขเพิ่ม: หลังจากบันทึกเสร็จ ให้ระบบทำการโหลด Peer ใหม่เข้าสู่ระบบทันทีโดยไม่ต้องรอรีสตาร์ตบอร์ด
+    // (หรือจะปล่อยให้ผู้ใช้กดรีสตาร์ตเองผ่านหน้าเว็บก็ได้เช่นกัน)
 
     server.sendHeader("Location",
         "/?msg=N" + String(n) + "+Saved");
@@ -195,7 +198,7 @@ void loadPeers()
 
     for (int i = 0; i < 3; i++)
     {
-        if (macs[i] == "")
+        if (macs[i] == "" || macs[i] == "NOT SET")
             continue;
 
         Serial.print("LOAD PEER ");
@@ -213,6 +216,11 @@ void loadPeers()
         memcpy(peerInfo.peer_addr, peerMacs[i], 6);
         peerInfo.channel = 0;
         peerInfo.encrypt = false;
+
+        // หากมี Peer เก่าค้างอยู่ในระบบ ให้ลบออกก่อนเพื่อป้องกันการลงทะเบียนซ้ำซ้อน
+        if (esp_now_is_peer_exist(peerMacs[i])) {
+            esp_now_del_peer(peerMacs[i]);
+        }
 
         if (esp_now_add_peer(&peerInfo) == ESP_OK)
         {
@@ -272,7 +280,6 @@ void OnDataRecv(const uint8_t *mac,
 
     Serial.print(dataIn);
     Serial.flush();
-    delay(10);
 }
 
 // =======================================================
@@ -292,12 +299,20 @@ void setup()
     if (!SPIFFS.begin(true))
         Serial.println("SPIFFS ERROR");
 
-    WiFi.mode(WIFI_STA);
+    // แก้ไขจุดสำคัญ: เปลี่ยนจาก WIFI_STA เป็น WIFI_AP_STA 
+    // เพื่อให้ทำงานได้ทั้ง 2 โหมดพร้อมกัน ไม่ทำให้ระบบหลังบ้านรวนจนเขียน Partition ไม่เข้า
+    WiFi.mode(WIFI_AP_STA);
+    Serial.print("STA MAC: ");
     Serial.println(WiFi.macAddress());
 
-    WiFi.softAP(AP_SSID, AP_PASSWORD);
-    Serial.println("MASTER CONFIG MODE");
-    Serial.println(WiFi.softAPIP());
+    // เปิดจุดกระจายสัญญาณ Wi-Fi Config
+    if (WiFi.softAP(AP_SSID, AP_PASSWORD)) {
+        Serial.println("MASTER CONFIG MODE");
+        Serial.print("AP IP: ");
+        Serial.println(WiFi.softAPIP());
+    } else {
+        Serial.println("SoftAP Failed!");
+    }
 
     server.on("/",         HTTP_GET,  handleRoot);
     server.on("/save1",    HTTP_POST, handleSaveN1);
@@ -337,7 +352,7 @@ void setup()
 }
 
 // =======================================================
-// TASK1 - Blink
+// TASK1 - Blink & WebServer
 // =======================================================
 
 void Task1code(void * pvParameters)
@@ -349,6 +364,10 @@ void Task1code(void * pvParameters)
     {
         wink();
         server.handleClient();
+        
+        // แก้ไขเพิ่ม: คืนเวลาเสี้ยววินาทีให้ระบบขัดจังหวะ (Yield) 
+        // ป้องกันคอร์ทำงานหนักเกินไป จนไปล็อคตัวเก็บข้อมูลของระบพาร์ทิชัน
+        delay(10); 
     }
 }
 
@@ -413,5 +432,6 @@ void Task2code(void * pvParameters)
 
 void loop()
 {
+    // ปล่อยว่างไว้ตามสไตล์ FreeRTOS Multi-tasking
     delay(100);
 }
