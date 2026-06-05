@@ -36,6 +36,7 @@ TaskHandle_t Task2;
 
 void Task1code(void * pvParameters);
 void Task2code(void * pvParameters);
+void loadPeers();
 
 // =======================================================
 // MAC STRING -> BYTE
@@ -162,6 +163,13 @@ void handleSaveN(int n)
     prefs.end();
 
     Serial.println("SAVED N" + String(n) + " : " + mac);
+
+    // รีโหลด Peer ใหม่
+    peerReady[0] = false;
+    peerReady[1] = false;
+    peerReady[2] = false;
+
+    loadPeers();
 
     // แก้ไขเพิ่ม: หลังจากบันทึกเสร็จ ให้ระบบทำการโหลด Peer ใหม่เข้าสู่ระบบทันทีโดยไม่ต้องรอรีสตาร์ตบอร์ด
     // (หรือจะปล่อยให้ผู้ใช้กดรีสตาร์ตเองผ่านหน้าเว็บก็ได้เช่นกัน)
