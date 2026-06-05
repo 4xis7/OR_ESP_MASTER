@@ -4,122 +4,173 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>MASTER CONFIG</title>
 
 <style>
-
+/* จัดดีไซน์ให้สะอาด มินิมอล และอยู่ตรงกลางทั้งหมด */
 body {
-  font-family: Arial;
-  background: #f4f4f4;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #f4f6f9;
+  color: #333;
   text-align: center;
-  padding-top: 40px;
-  padding-bottom: 60px;
+  padding: 30px 15px;
+  margin: 0;
 }
 
-.card {
-  width: 420px;
-  margin: auto;
-  background: white;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
-  margin-bottom: 20px;
+/* การ์ดคอนเทนเนอร์ */
+.card, .node-card {
+  max-width: 440px;
+  width: 100%;
+  margin: 0 auto 20px auto;
+  background: #ffffff;
+  padding: 30px 25px;
+  border-radius: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+  text-align: center; /* จัดเนื้อหาภายในการ์ดให้อยู่ตรงกลางทั้งหมด */
+}
+
+.card h2 {
+  margin: 0 0 10px 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #111;
+  letter-spacing: -0.5px;
 }
 
 .mac-self {
   font-size: 13px;
-  color: #888;
-  margin-top: 8px;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.node-card {
-  width: 420px;
-  margin: 16px auto;
-  background: white;
-  padding: 20px 25px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.15);
-  text-align: left;
-}
-
+/* เนื้อหาภายใน Node Card */
 .node-card h3 {
-  margin: 0 0 6px 0;
-  font-size: 16px;
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
 }
 
 .status {
   display: inline-block;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 2px 10px;
-  border-radius: 20px;
-  margin-bottom: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 50px;
+  margin-bottom: 15px;
+  letter-spacing: 0.5px;
 }
 
-.on  { background: #d4edda; color: #155724; }
-.off { background: #f8d7da; color: #721c24; }
+.on  { background: #e2fbe8; color: #1e7e34; }
+.off { background: #ffe3e3; color: #dc3545; }
 
 .saved-mac {
-  font-size: 12px;
-  color: #555;
-  margin-bottom: 12px;
-  word-break: break-all;
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 20px;
+  font-weight: 500;
 }
 
+/* กล่องอินพุตสำหรับกรอก MAC Address */
 input[type="text"] {
   width: 100%;
-  padding: 9px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  max-width: 280px;
+  padding: 12px 16px;
+  font-size: 15px;
+  color: #222;
+  background-color: #fafafa;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
   box-sizing: border-box;
-  margin-bottom: 8px;
+  margin: 0 auto 20px auto;
+  display: block;
+  text-align: center;
+  transition: all 0.2s ease;
 }
 
+input[type="text"]:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+input[type="text"]::placeholder {
+  color: #cbd5e1;
+}
+
+/* ปุ่มกดสีน้ำเงินสด ทรงแคปซูลมนกลม และอยู่ตรงกลาง */
 button[type="submit"] {
-  width: 100%;
-  padding: 9px;
+  width: 140px; /* ปรับขนาดให้กว้างขึ้นเล็กน้อยเพื่อให้ข้อความ SAVE N1 อยู่ในบรรทัดเดียวสวยๆ */
+  padding: 10px 0;
   font-size: 14px;
-  background: #007bff;
+  font-weight: 600;
+  background: #3b82f6; /* สีน้ำเงินสดตามภาพตัวอย่าง */
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 50px; /* ทรงแคปซูลมนกลมแบบในภาพ */
   cursor: pointer;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+  transition: all 0.2s ease;
+  display: block;
+  margin: 0 auto; /* จัดให้อยู่ตรงกลางเป๊ะๆ */
+  text-transform: uppercase;
+}
+
+button[type="submit"]:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
 }
 
 button[type="submit"]:active {
-  opacity: 0.8;
+  transform: translateY(1px);
+  opacity: 0.9;
 }
 
+/* ปุ่ม RESTART สไตล์สีน้ำเงินและมนกลมแบบเดียวกัน */
 .btn-restart {
-  width: 420px;
-  margin: 8px auto 0;
-  display: block;
-  padding: 10px;
+  width: 140px;
+  padding: 10px 0;
   font-size: 14px;
-  background: #dc3545;
+  font-weight: 600;
+  background: #3b82f6;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 50px;
   cursor: pointer;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+  transition: all 0.2s ease;
+  display: block;
+  margin: 15px auto 0 auto;
+  text-transform: uppercase;
 }
 
+.btn-restart:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.btn-restart:active {
+  transform: translateY(1px);
+  opacity: 0.9;
+}
 </style>
 
 </head>
 
 <body>
 
-<!-- Header -->
 <div class="card">
   <h2>MASTER CONFIG</h2>
   <div class="mac-self">THIS MAC : %MY_MAC%</div>
 </div>
 
-<!-- N1 -->
 <div class="node-card">
 
   <h3>N1 — GPS NODE</h3>
@@ -138,7 +189,6 @@ button[type="submit"]:active {
 
 </div>
 
-<!-- N2 -->
 <div class="node-card">
 
   <h3>N2 — CLIENT B</h3>
@@ -157,7 +207,6 @@ button[type="submit"]:active {
 
 </div>
 
-<!-- N3 -->
 <div class="node-card">
 
   <h3>N3 — CLIENT C</h3>
@@ -176,7 +225,6 @@ button[type="submit"]:active {
 
 </div>
 
-<!-- Restart -->
 <form action="/restart" method="POST">
   <button class="btn-restart" type="submit">
     RESTART
