@@ -432,6 +432,5 @@ void Task2code(void * pvParameters)
 
 void loop()
 {
-    // ปล่อยว่างไว้ตามสไตล์ FreeRTOS Multi-tasking
     delay(100);
 }
